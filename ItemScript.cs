@@ -18,11 +18,15 @@ public class ItemScript : MonoBehaviour
 
     public void AddItem(Item newItem)
     {
+        // ë™ì¼ IDì˜ ì•„ì´í…œì´ ì´ë¯¸ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
         foreach (Item item in items)
         {
             if (item.itemID == newItem.itemID)
             {
+                // ì¡´ì¬í•˜ë©´ ìˆ˜ëŸ‰ë§Œ ì¦ê°€
                 item.quantity += newItem.quantity;
+
+                // UI ê°±ì‹ (7ê°œ íŒ¨ë„ ëª¨ë‘)
                 UpdateUI();
                 UpdateUI1();
                 UpdateUI2();
@@ -33,7 +37,9 @@ public class ItemScript : MonoBehaviour
                 return;
             }
         }
-        items.Add(newItem);
+        items.Add(newItem); //ì—†ìœ¼ë©´ ìƒˆë¡œ ì¶”ê°€
+
+        //UI ê°±ì‹ 
         UpdateUI();
         UpdateUI1();
         UpdateUI2();
@@ -46,14 +52,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n";
             }
 
-            itemCountText.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
@@ -64,14 +70,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText1 != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n";
             }
 
-            itemCountText1.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText1.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
@@ -82,14 +88,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText2 != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n";
             }
 
-            itemCountText2.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText2.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
@@ -100,14 +106,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText3 != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n";
             }
 
-            itemCountText3.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText3.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
@@ -118,14 +124,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText4 != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n";
             }
 
-            itemCountText4.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText4.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
@@ -136,14 +142,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText5 != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n";
             }
 
-            itemCountText5.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText5.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
@@ -154,14 +160,14 @@ public class ItemScript : MonoBehaviour
     {
         if (itemCountText6 != null)
         {
-            string itemsQuantityText = ""; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ´ãÀ» ¹®ÀÚ¿­ ÃÊ±âÈ­
+            string itemsQuantityText = ""; // ê° ì•„ì´í…œì˜ quantityë¥¼ ë‹´ì„ ë¬¸ìì—´ ì´ˆê¸°í™”
 
             foreach (Item item in items)
             {
                 itemsQuantityText += item.quantity + "\n" ;
             }
 
-            itemCountText6.text = itemsQuantityText; // °¢ ¾ÆÀÌÅÛÀÇ quantity¸¦ ÅØ½ºÆ®·Î Ãâ·Â
+            itemCountText6.text = itemsQuantityText; // ê° ì•„ì´í…œì˜ quantityë¥¼ í…ìŠ¤íŠ¸ë¡œ ì¶œë ¥
         }
         else
         {
