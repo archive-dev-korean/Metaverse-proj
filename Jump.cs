@@ -20,7 +20,7 @@ public class Jump : MonoBehaviour
 
     }
 
-    public void Onclick()
+    public void Onclick() //점프 버튼 클릭시 isJump 애니메이션(점프모션) 재생
     {
         anim.SetTrigger("isJump");
     }
