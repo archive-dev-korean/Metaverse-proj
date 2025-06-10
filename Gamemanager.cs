@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public enum GameInstance
+public enum GameInstance //게임 내에서 선택 가능한 돌의 종류 정의
 {
     TtenSeokki1,
     TtenSeokki2,
@@ -16,64 +16,48 @@ public enum GameInstance
     none,
 }
 
-public class Gamemanager : MonoBehaviour
+public class Gamemanager : MonoBehaviour //UI버튼, 스크롤, 인벤토리 및 아이템 클릭 등을 관리하는 게임 매니저
 {
     public Button book1;
     public Button book2;
-    public Button book3;
+    public Button book3; 
+    // 책 열기 버튼
+
+    // 스크롤이 끝나면 활성화될 UI
     public GameObject Close1;
     public GameObject Close2;
     public GameObject Close3;
-    public GameObject MasterClose;
-    public GameObject CloseNotice;
-    public GameObject RecommendedBook;
+    public GameObject MasterClose; //모든 완료 후 표시되는 마스터 클로즈
+    public GameObject CloseNotice; //알림 닫기용
+    public GameObject RecommendedBook; //추천 도서 UI
+    
     public Image Complete1;
     public Image Complete2;
     public Image Complete3;
-    public Image NoticeScene;
+    //완료 표시 이미지
+    
+    public Image NoticeScene; //알림 씬 이미지
+
     public GameObject Scroll1;
     public GameObject Scroll2;
     public GameObject Scroll3;
-    //public GameObject[] Scrolls;
-    //public ScrollRect scrollRect1;
-    //public ScrollRect scrollRect2;
-    //public ScrollRect scrollRect3;
-    public float scrollEndThreshold = 0.9f;
-    public GameObject inventory;
-    public GameObject inven6;
-    public ItemScript itemScript;
-    public GameInstance selectedStone;
-
-    public GameObject talkPanel;
+    // 각 책의 스크롤 내용
     
-    public TalkManager talkManager;
-    public QuestManager questManager;
+    public float scrollEndThreshold = 0.9f; //스크롤이 거의 끝났을 때 기준
+    public GameObject inventory; // 인벤토리 전체
+    public GameObject inven6; // 인벤토리 서브패널
+    public ItemScript itemScript; // 아이템 로직 컨트롤러
+    public GameInstance selectedStone; // 선택된 돌 상태 저장
+
+    public GameObject talkPanel; //대화 패널
+    
+    public TalkManager talkManager; // 대화 시스템 매니저
+    public QuestManager questManager; // 퀘스트 시스템 매니저
     //public Player playerObj;
     //public GameObject player;
     //public GameObject characterUICanvasObj;
-
-    private void OnEnable()
-    {
-        
-            // "On Value Changed" �̺�Ʈ�� �ݹ� �Լ� ����
-            //scrollRect1.onValueChanged.AddListener(OnScrollValueChanged);
-            //scrollRect2.onValueChanged.AddListener(OnScrollValueChanged);
-            //scrollRect3.onValueChanged.AddListener(OnScrollValueChanged);
-        
     
-        // "On Value Changed" �̺�Ʈ�� �ݹ� �Լ� ����
-       // scrollRect.onValueChanged.AddListener(OnScrollValueChanged);
-    }
-
-    private void OnDisable()
-    {
-        // ��ũ��Ʈ�� ��Ȱ��ȭ�� �� �̺�Ʈ ����
-        //scrollRect1.onValueChanged.RemoveListener(OnScrollValueChanged);
-        //scrollRect2.onValueChanged.RemoveListener(OnScrollValueChanged);
-        //scrollRect3.onValueChanged.RemoveListener(OnScrollValueChanged);
-    }
-    
-    void Awake()
+    void Awake() //중복된 Gamemanager 방지
     {
         int gameManagerCount = FindObjectsOfType<Gamemanager>().Length;
 
@@ -92,36 +76,17 @@ public class Gamemanager : MonoBehaviour
         selectedStone = GameInstance.none;
     }
 
-    private void Update()
-    {
-        //float verticalScrollPosition1 = scrollRect1.verticalNormalizedPosition;
-        //float verticalScrollPosition2 = scrollRect2.verticalNormalizedPosition;
-        //float verticalScrollPosition3 = scrollRect3.verticalNormalizedPosition;
-        //if (verticalScrollPosition1 <= 1 - scrollEndThreshold)
-        //{
-        //    Close1.gameObject.SetActive(true);
-        //}
-        //if (verticalScrollPosition2 <= 1 - scrollEndThreshold)
-        //{
-        //    Close2.gameObject.SetActive(true);
-        //}
-        //if (verticalScrollPosition3 <= 1 - scrollEndThreshold)
-        //{
-        //    Close3.gameObject.SetActive(true);
-        //}
-    }
-
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode) //씬 로드 시 호출되는 이벤트
     {
         Debug.Log("씬재로드");
     }
 
-    public void SetSelectedStone(GameInstance stone)
+    public void SetSelectedStone(GameInstance stone) //현재 선택된 돌 저장
     {
         selectedStone = stone;
     }
 
-    public GameInstance GetSelectedStone()
+    public GameInstance GetSelectedStone() //선택된 돌 반환
     {
         return selectedStone;
     }
@@ -195,35 +160,32 @@ public class Gamemanager : MonoBehaviour
     //    }
     //}
 
-    public void OnScrollValueChanged(Vector2 value)
+    public void OnScrollValueChanged(Vector2 value) //특정 스크롤이 끝까지 내려갔는지 체그하는 이벤트
     {
-        // ���� ��ũ�� ���� Ư�� �Ӱ谪 ���Ϸ� �������ٸ�
+       
         if (value.y <= 1 - scrollEndThreshold)
         {
-            Debug.Log("911");
-            // ��ũ���� �������Ƿ� SetActive(false) ȣ��
-            //Close1.SetActive(true);
+            Debug.Log("911"); // 확인용 디버그 메세지
+          
         }
     }
 
-    public void ItemClick()
+    public void ItemClick() // 특정 아이템 클릭 시 수량, UI 갱신
     {
         //inventory.gameObject.SetActive(true);
         inven6.gameObject.SetActive(false);
         if (itemScript != null)
         {
             Debug.Log(123);
-            // ItemScript���� ������ ����Ʈ ��������
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 0; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
-
+            
+            int itemIndexToUpdate = 0; 
             if (itemIndexToUpdate >= 0 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++;
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
@@ -240,34 +202,33 @@ public class Gamemanager : MonoBehaviour
     }
     public void ItemClick2()
     {
-        //inventory.gameObject.SetActive(true);
+        
         inven6.gameObject.SetActive(false);
         if (itemScript != null)
         {
             Debug.Log(123);
-            // ItemScript���� ������ ����Ʈ ��������
+            
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 1; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
-
+           
+            int itemIndexToUpdate = 1; 
             if (itemIndexToUpdate >= 1 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
                 Debug.LogError("Invalid item index or itemList is empty!");
             }
 
-            // UI ����
+            
             itemScript.UpdateUI1();
         }
         else
         {
-            Debug.LogError("ItemScript�� �Ҵ���� �ʾҽ��ϴ�.");
+            Debug.LogError("ItemScript�� �Ҵ���� �ʾҽ��ϴ�."); 
         }
     }
     public void ItemClick3()
@@ -277,17 +238,16 @@ public class Gamemanager : MonoBehaviour
         if (itemScript != null)
         {
             Debug.Log(123);
-            // ItemScript���� ������ ����Ʈ ��������
+           
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 2; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
-
+           
+            int itemIndexToUpdate = 2; 
             if (itemIndexToUpdate >= 2 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
@@ -309,17 +269,17 @@ public class Gamemanager : MonoBehaviour
         if (itemScript != null)
         {
             Debug.Log(123);
-            // ItemScript���� ������ ����Ʈ ��������
+            
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 3; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
+           
+            int itemIndexToUpdate = 3; 
 
             if (itemIndexToUpdate >= 3 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
@@ -341,17 +301,17 @@ public class Gamemanager : MonoBehaviour
         if (itemScript != null)
         {
             Debug.Log(123);
-            // ItemScript���� ������ ����Ʈ ��������
+           
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 4; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
+           
+            int itemIndexToUpdate = 4; 
 
             if (itemIndexToUpdate >= 4 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
@@ -376,14 +336,13 @@ public class Gamemanager : MonoBehaviour
             // ItemScript���� ������ ����Ʈ ��������
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 5; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
-
+            
+            int itemIndexToUpdate = 5; 
             if (itemIndexToUpdate >= 5 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
@@ -405,17 +364,17 @@ public class Gamemanager : MonoBehaviour
         if (itemScript != null)
         {
             Debug.Log(123);
-            // ItemScript���� ������ ����Ʈ ��������
+            
             var itemList = itemScript.GetItems();
 
-            // �������� quantity ������Ű��
-            int itemIndexToUpdate = 6; // ���� ���, ù ��° �������� quantity�� ������Ű�� �ʹٸ� index 0�� ����մϴ�.
+           
+            int itemIndexToUpdate = 6; 
 
             if (itemIndexToUpdate >= 6 && itemIndexToUpdate < itemList.Count)
             {
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
-                itemList[itemIndexToUpdate].quantity++; // Ư�� �������� quantity�� 1 ������ŵ�ϴ�.
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
+                itemList[itemIndexToUpdate].quantity++; 
             }
             else
             {
@@ -430,6 +389,8 @@ public class Gamemanager : MonoBehaviour
             Debug.LogError("ItemScript�� �Ҵ���� �ʾҽ��ϴ�.");
         }
     }
+
+    // 책 클릭 시 스크롤 UI 열기
     public void BookClick3()
     {
         Scroll3.gameObject.SetActive(true);
@@ -446,6 +407,8 @@ public class Gamemanager : MonoBehaviour
     {
             NoticeScene.gameObject.SetActive(false);
     }
+
+    // 스크롤 닫기 후 완료 이미지 및 인벤토리 활성화(비활성됨)
     public void CloseClick()
     {
         //if (scrollRect1.gameObject.activeSelf == true && scrollRect2.gameObject.activeSelf == false && scrollRect3.gameObject.activeSelf == false)
