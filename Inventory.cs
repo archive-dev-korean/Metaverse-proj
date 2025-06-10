@@ -7,13 +7,13 @@ using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 
-
+// 인벤토리 UI에서 돌 선택 및 제작 화면을 제어하는 클래스
 public class Inventory : MonoBehaviour
 {
-    public GameObject[] backgroundArr = {};
-    public Gamemanager gameManager;
-    public GameObject inventory;
-    private GameInstance[] stoneEnumArr = {
+    public GameObject[] backgroundArr = {}; // 각 돌의 제작 배경 오브젝트 배열
+    public Gamemanager gameManager; // GameManager 참조
+    public GameObject inventory; //인벤토리 창 자체 오브젝트
+    private GameInstance[] stoneEnumArr = { //선택 가능한 돌 Enum 배열
         GameInstance.TtenSeokki1,
         GameInstance.TtenSeokki2,
         GameInstance.TtenSeokki3,
@@ -21,21 +21,24 @@ public class Inventory : MonoBehaviour
         GameInstance.GanSeokki2,
         GameInstance.GanSeokki3,
     };
-    public Image currentImage;
-    public Image[] activeImageArr;
-    Player playerScript;
+    public Image currentImage; //선택한 돌에 해당하는 이미지
+    public Image[] activeImageArr; // 돌 버튼 클릭 시 활성화할 이미지 배열
+    Player playerScript; //플레이어 스크립트 참조
 
     void Start()
     {
         gameManager = FindObjectOfType<Gamemanager>();
         playerScript = GameObject.FindWithTag("Player").GetComponent<Player>() ;
     }
+    // 돌 버튼 클릭 시 호출: 해당 돌을 선택하고 이미지 활성화
     public void stoneClick(int buttonIndex)
     {
+        // 기존 선택 이미지 비활성화
         if(currentImage != null)
         {
             currentImage.transform.gameObject.SetActive(false);
         }
+        // 선택된 돌 Enum 저장
         gameManager.SetSelectedStone(stoneEnumArr[buttonIndex]);
         currentImage = activeImageArr[buttonIndex];
         currentImage.transform.gameObject.SetActive(true);
@@ -69,8 +72,9 @@ public class Inventory : MonoBehaviour
         }
     }
    */
-    public void makeclick()
+    public void makeclick() //제작 버튼 클릭 시: 선택된 돌에 맞는 배경 UI 활성화
     {
+        // 선택된 돌에 따라 해당 배경 활성화
         if (gameManager.GetSelectedStone() == GameInstance.TtenSeokki1)
         {
             backgroundArr[0].gameObject.SetActive(true);
@@ -95,10 +99,10 @@ public class Inventory : MonoBehaviour
         {
             backgroundArr[5].gameObject.SetActive(true);
         }
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); // 인벤토리 창 닫기
     }
 
-    public void CloseInven()
+    public void CloseInven() //인벤토리 창 닫기 + 제작 상태 false로 변경
     {
         gameObject.SetActive(false);
         playerScript.SetIsPlayerMaking(false);
